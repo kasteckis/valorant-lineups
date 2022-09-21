@@ -1,13 +1,20 @@
 import {Agent} from "../pages/api/agents";
 import Image from "next/image";
 import {Box} from "@mui/material";
+import {useCallback} from "react";
+import {useRouter} from "next/router";
 
 interface Props {
     agents: Agent[],
-    chooseAgent: (agent: Agent) => () => void,
 }
 
-const AgentSelection = ({agents, chooseAgent}: Props) => {
+const AgentSelection = ({agents}: Props) => {
+    const router = useRouter()
+
+    const chooseAgent = useCallback((agent: Agent) => () => {
+        router.push(agent.name.toLowerCase())
+    }, [router])
+
     return (<>
         <Box sx={{
             m: 5,
