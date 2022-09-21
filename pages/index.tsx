@@ -1,10 +1,9 @@
-import type { NextPage } from 'next'
+import type {GetServerSideProps, NextPage} from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import {Box} from "@mui/material";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import {GetStaticProps} from "next";
 import {Agent} from "./api/agents";
 import MainPage from "../components/MainPage";
 import {apiClient} from "../utils/apiClient";
@@ -57,7 +56,7 @@ const Home: NextPage<HomePageProps> = (props: HomePageProps) => {
     )
 }
 
-export async function getStaticProps(context: GetStaticProps) {
+export async function getServerSideProps(context: GetServerSideProps) {
     const response = await apiClient.get<Agent[]>('agents');
 
     return {
