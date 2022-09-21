@@ -2,9 +2,12 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import {Box} from "@mui/material";
-import AgentSelection from "../components/AgentSelection";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import {GetStaticProps} from "next";
+import {Agent} from "./api/agents";
+import MainPage from "../components/MainPage";
+import {apiClient} from "../utils/apiClient";
 
 const darkTheme = createTheme({
     palette: {
@@ -12,7 +15,11 @@ const darkTheme = createTheme({
     },
 });
 
-const Home: NextPage = () => {
+export interface HomePageProps {
+    agents: Agent[],
+}
+
+const Home: NextPage<HomePageProps> = (props: HomePageProps) => {
     return (
         <>
             <Head>
@@ -31,7 +38,7 @@ const Home: NextPage = () => {
                     m: 1,
                     borderRadius: 1,
                 }}>
-                    <AgentSelection />
+                    <MainPage {...props} />
                 </Box>
 
                 <a
@@ -48,6 +55,16 @@ const Home: NextPage = () => {
             </ThemeProvider>
         </>
     )
+}
+
+export async function getStaticProps(context: GetStaticProps) {
+    const response = await apiClient.get<Agent[]>('agents');
+
+    return {
+        props: {
+            agents: response.data,
+        },
+    }
 }
 
 export default Home

@@ -1,10 +1,18 @@
-import {Alert} from "@mui/material";
+import {Agent} from "../pages/api/agents";
+import Image from "next/image";
 
-const AgentSelection = () => {
-    return <div>
-        <Alert severity="error">This is an error alert — check it out!</Alert>
-        <h1>Todo</h1>
-    </div>
+interface Props {
+    agents: Agent[],
+}
+
+const AgentSelection = ({agents}: Props) => {
+    return (<>
+        {agents.map(agent =>
+            <div key={agent.name}>
+                <Image style={{borderStyle: 'solid'}} src={agent.picture} alt={agent.name + ' logo'} width={150} height={150} />
+            </div>
+        )}
+    </>)
 }
 
 export default AgentSelection;
