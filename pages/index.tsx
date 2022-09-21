@@ -30,15 +30,7 @@ const Home: NextPage<HomePageProps> = (props: HomePageProps) => {
             <ThemeProvider theme={darkTheme}>
                 <CssBaseline />
 
-                <Box sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    p: 1,
-                    m: 1,
-                    borderRadius: 1,
-                }}>
-                    <MainPage {...props} />
-                </Box>
+                <MainPage {...props} />
 
                 <a
                     style={{position: 'absolute', bottom: 0, right: 0}}

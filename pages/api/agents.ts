@@ -13,6 +13,14 @@ export default function handler(
         {
             name: 'Viper',
             picture: '/agents/viper.png',
-        }
+        },
+        {
+            name: 'Brimstone',
+            picture: '/agents/brimstone.png',
+        },
+        {
+            name: 'Killjoy',
+            picture: '/agents/killjoy.png',
+        },
     ])
 }
