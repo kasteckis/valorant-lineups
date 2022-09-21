@@ -1,33 +1,39 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import {Box} from "@mui/material";
+import AgentSelection from "../components/AgentSelection";
 
 const Home: NextPage = () => {
     return (
-        <div className={styles.container}>
+        <>
             <Head>
                 <title>Valorant Lineups</title>
                 <meta name="description" content="Valorant agent lineups in every map." />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <main className={styles.main}>
-                <h1>Todo</h1>
-            </main>
+            <Box sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                p: 1,
+                m: 1,
+                borderRadius: 1,
+            }}>
+                <AgentSelection />
+            </Box>
 
-            <footer className={styles.footer}>
-                <a
-                  href="https://github.com/kasteckis/valorant-lineups"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                    <span className={styles.logo}>
-                        <Image src="/github.svg" alt="Github Logo" width={30} height={30} />
-                    </span>
-                </a>
-            </footer>
-        </div>
+            <a
+                style={{position: 'absolute', bottom: 0, right: 0}}
+                href="https://github.com/kasteckis/valorant-lineups"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <span>
+                    <Image src="/github.svg" alt="Github Logo" width={30} height={30} />
+                </span>
+            </a>
+        </>
     )
 }
 
