@@ -10,7 +10,7 @@ import {apiClient} from "../utils/apiClient";
 
 const darkTheme = createTheme({
     palette: {
-        mode: 'light',
+        mode: 'dark',
     },
 });
 
