@@ -4,7 +4,7 @@ import {Box} from "@mui/material";
 
 interface Props {
     agents: Agent[],
-    chooseAgent: (agent: string) => () => void,
+    chooseAgent: (agent: Agent) => () => void,
 }
 
 const AgentSelection = ({agents, chooseAgent}: Props) => {
@@ -22,7 +22,7 @@ const AgentSelection = ({agents, chooseAgent}: Props) => {
         }}>
             {agents.map(agent =>
                 <div key={agent.name}>
-                    <Image onClick={chooseAgent(agent.name)} style={{borderStyle: 'solid'}} src={agent.picture} alt={agent.name + ' logo'} width={150} height={150} />
+                    <Image onClick={chooseAgent(agent)} style={{borderStyle: 'solid'}} src={agent.picture} alt={agent.name + ' logo'} width={150} height={150} />
                 </div>
             )}
         </Box>
