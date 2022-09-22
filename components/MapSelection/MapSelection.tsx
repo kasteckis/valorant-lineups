@@ -19,13 +19,13 @@ const MapSelection = ({agent}: Props) => {
             display: 'flex',
             justifyContent: 'center',
         }}>
-            <h3>{agent.name} is selected!</h3>
+            <Image style={{borderStyle: 'solid'}} src={agent.picture} alt={agent.name + ' logo'} width={100} height={100} />
         </Box>
         <Box sx={{
             display: 'flex',
             justifyContent: 'center',
         }}>
-            <Image style={{borderStyle: 'solid'}} src={agent.picture} alt={agent.name + ' logo'} width={150} height={150} />
+            <h3>{agent.name} is selected!</h3>
         </Box>
     </>)
 }

@@ -22,7 +22,7 @@ export default function handler(
         {
             name: agent, // Viper
             shortName: agent, // viper
-            picture: '/agents/viper.png',
+            picture: `/agents/${agent}.png`,
         }
     )
 }
