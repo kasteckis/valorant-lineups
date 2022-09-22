@@ -11,26 +11,15 @@ const AgentPage: NextPage = () => {
     let { agent } = router.query
     agent = agent ? agent.toString() : ''
 
-    const [agentEntity, setAgentEntity] = useState<Agent | undefined>(undefined)
-
-    const getAgent = useCallback(async () => {
-        const response = await apiClient.get<Agent>(`agent/${agent}`)
-        setAgentEntity(response.data)
-    }, [agent, setAgentEntity]);
-
-    useEffect(() => {
-        getAgent();
-    }, [getAgent])
-
     return (
         <>
             <Head>
-                <title>Valorant Lineups</title>
+                <title>Valorant Lineups | {agent}</title>
                 <meta name="description" content="Valorant agent lineups in every map." />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            {agentEntity && <MapSelection agent={agent} agentEntity={agentEntity} />}
+            <MapSelection agent={agent} />
         </>
     )
 }

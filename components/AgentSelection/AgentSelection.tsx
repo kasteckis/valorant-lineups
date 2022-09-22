@@ -4,6 +4,8 @@ import {Box} from "@mui/material";
 import {useCallback} from "react";
 import {useRouter} from "next/router";
 import styles from './AgentSelection.module.css';
+import {useRecoilState} from "recoil";
+import {selectedAgent} from "../../utils/atoms";
 
 interface Props {
     agents: Agent[],
@@ -11,10 +13,12 @@ interface Props {
 
 const AgentSelection = ({agents}: Props) => {
     const router = useRouter()
+    const [agentEntity, setAgentEntity] = useRecoilState<Agent | undefined>(selectedAgent);
 
     const chooseAgent = useCallback((agent: Agent) => () => {
+        setAgentEntity(agent)
         router.push(agent.shortName)
-    }, [router])
+    }, [router, setAgentEntity])
 
     return (<>
         <Box sx={{
