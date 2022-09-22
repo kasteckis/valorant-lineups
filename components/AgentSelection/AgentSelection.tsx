@@ -22,15 +22,16 @@ const AgentSelection = ({agents}: Props) => {
             display: 'flex',
             justifyContent: 'center',
         }}>
-            <h1>Choose an agent</h1>
+            <h1>Choose the agent</h1>
         </Box>
         <Box sx={{
             display: 'flex',
             justifyContent: 'center',
+            flexWrap: 'wrap',
         }}>
             {agents.map(agent =>
                 <div key={agent.name}>
-                    <Image onClick={chooseAgent(agent)} className={styles.agentSelectionImage} src={agent.picture} alt={agent.name + ' logo'} width={150} height={150} />
+                    <Image onClick={chooseAgent(agent)} className={styles.agentSelectionImage} src={agent.picture} alt={agent.name + ' logo'} width={180} height={180} />
                 </div>
             )}
         </Box>

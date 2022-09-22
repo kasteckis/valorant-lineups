@@ -8,7 +8,8 @@ import {useCallback, useEffect, useState} from "react";
 
 const AgentPage: NextPage = () => {
     const router = useRouter()
-    const { agent } = router.query
+    let { agent } = router.query
+    agent = agent ? agent.toString() : ''
 
     const [agentEntity, setAgentEntity] = useState<Agent | undefined>(undefined)
 
@@ -29,7 +30,7 @@ const AgentPage: NextPage = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            {agentEntity && <MapSelection agent={agentEntity} />}
+            {agentEntity && <MapSelection agent={agent} agentEntity={agentEntity} />}
         </>
     )
 }

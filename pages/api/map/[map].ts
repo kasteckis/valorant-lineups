@@ -1,10 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import {Map} from "../maps";
+import {ValorantMap} from "../maps";
 import {ErrorResponse} from "../../../utils/errorResponse";
 
 export default function handler(
     req: NextApiRequest,
-    res: NextApiResponse<Map | ErrorResponse>
+    res: NextApiResponse<ValorantMap | ErrorResponse>
 ) {
     let { map } = req.query;
     map = map ? map.toString() : undefined;
@@ -22,7 +22,7 @@ export default function handler(
         {
             name: map, // Haven
             shortName: map, // haven
-            picture: '/maps/haven.png',
+            picture: `/maps/${map}.png`,
         }
     )
 }
