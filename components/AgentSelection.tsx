@@ -12,7 +12,7 @@ const AgentSelection = ({agents}: Props) => {
     const router = useRouter()
 
     const chooseAgent = useCallback((agent: Agent) => () => {
-        router.push(agent.name.toLowerCase())
+        router.push(agent.shortName)
     }, [router])
 
     return (<>
