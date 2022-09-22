@@ -1,10 +1,9 @@
-import {Agent} from "../pages/api/agents";
+import {Agent} from "../../pages/api/agents";
 import Image from "next/image";
 import {Box} from "@mui/material";
 
 interface Props {
     agent: Agent,
-    // chooseMap: (map: string) => () => void,
 }
 
 const MapSelection = ({agent}: Props) => {

@@ -2,7 +2,7 @@ import type {GetServerSideProps, NextPage} from 'next'
 import Head from 'next/head'
 import {Agent} from "./api/agents";
 import {apiClient} from "../utils/apiClient";
-import AgentSelection from "../components/AgentSelection";
+import AgentSelection from "../components/AgentSelection/AgentSelection";
 
 export interface HomePageProps {
     agents: Agent[],

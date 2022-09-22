@@ -1,17 +1,25 @@
-import type {GetStaticProps, NextPage} from 'next'
+import type {NextPage} from 'next'
 import Head from 'next/head'
 import {useRouter} from "next/router";
-import {GetServerSideProps} from "next";
 import {apiClient} from "../../utils/apiClient";
 import {Agent} from "../api/agents";
+import MapSelection from "../../components/MapSelection/MapSelection";
+import {useCallback, useEffect, useState} from "react";
 
-interface AgentPageProps {
-
-}
-
-const AgentPage: NextPage<AgentPageProps> = (props: AgentPageProps) => {
+const AgentPage: NextPage = () => {
     const router = useRouter()
     const { agent } = router.query
+
+    const [agentEntity, setAgentEntity] = useState<Agent | undefined>(undefined)
+
+    const getAgent = useCallback(async () => {
+        const response = await apiClient.get<Agent>(`agent/${agent}`)
+        setAgentEntity(response.data)
+    }, [agent, setAgentEntity]);
+
+    useEffect(() => {
+        getAgent();
+    }, [getAgent])
 
     return (
         <>
@@ -21,20 +29,9 @@ const AgentPage: NextPage<AgentPageProps> = (props: AgentPageProps) => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <h1>todo map selection</h1>
-            <h2>{agent}</h2>
+            {agentEntity && <MapSelection agent={agentEntity} />}
         </>
     )
-}
-
-export async function getServerSideProps(context: GetServerSideProps) {
-    const response = await apiClient.get<Agent[]>('agents');
-
-    return {
-        props: {
-            agents: response.data,
-        },
-    }
 }
 
 export default AgentPage

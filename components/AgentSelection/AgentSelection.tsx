@@ -1,8 +1,9 @@
-import {Agent} from "../pages/api/agents";
+import {Agent} from "../../pages/api/agents";
 import Image from "next/image";
 import {Box} from "@mui/material";
 import {useCallback} from "react";
 import {useRouter} from "next/router";
+import styles from './AgentSelection.module.css';
 
 interface Props {
     agents: Agent[],
@@ -29,7 +30,7 @@ const AgentSelection = ({agents}: Props) => {
         }}>
             {agents.map(agent =>
                 <div key={agent.name}>
-                    <Image onClick={chooseAgent(agent)} style={{borderStyle: 'solid'}} src={agent.picture} alt={agent.name + ' logo'} width={150} height={150} />
+                    <Image onClick={chooseAgent(agent)} className={styles.agentSelectionImage} src={agent.picture} alt={agent.name + ' logo'} width={150} height={150} />
                 </div>
             )}
         </Box>
