@@ -103,9 +103,11 @@ const LineupSelection = ({agent, map}: Props) => {
                     </div>
                 )}
             </Box>
-            {selectedLineup && <Dialog open={!!selectedLineup} onClose={deselectLineup}>
-                <LineupContent lineup={selectedLineup} />
-            </Dialog>}
+            {selectedLineup &&
+                <Dialog open={!!selectedLineup} onClose={deselectLineup} fullWidth={true} maxWidth={'xl'}>
+                    <LineupContent lineup={selectedLineup} />
+                </Dialog>
+            }
         </>}
     </>)
 }
