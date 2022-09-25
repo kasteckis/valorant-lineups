@@ -1,6 +1,6 @@
 import {Agent} from "../../pages/api/agents";
 import Image from "next/image";
-import {Box} from "@mui/material";
+import {Box, Dialog} from "@mui/material";
 import {useCallback, useEffect, useState} from "react";
 import {useRecoilState} from "recoil";
 import {selectedAgent, selectedMap} from "../../utils/atoms";
@@ -8,6 +8,7 @@ import {apiClient} from "../../utils/apiClient";
 import {ValorantMap} from "../../pages/api/maps";
 import {Lineup} from "../../pages/api/lineups";
 import styles from "./LineupSelection.module.css";
+import LineupContent from "./LineupContent/LineupContent";
 
 interface Props {
     agent: string,
@@ -18,9 +19,14 @@ const LineupSelection = ({agent, map}: Props) => {
     const [agentEntity, setAgentEntity] = useRecoilState(selectedAgent);
     const [mapEntity, setMapEntity] = useRecoilState(selectedMap);
     const [lineups, setLineups] = useState<Lineup[]>([]);
+    const [selectedLineup, setSelectedLineup] = useState<Lineup | null>(null);
 
     const chooseLineup = useCallback((lineup: Lineup) => () => {
-        console.log(lineup)
+        setSelectedLineup(lineup)
+    }, [])
+
+    const deselectLineup = useCallback( () => {
+        setSelectedLineup(null)
     }, [])
 
     const getAgent = useCallback(async () => {
@@ -97,6 +103,9 @@ const LineupSelection = ({agent, map}: Props) => {
                     </div>
                 )}
             </Box>
+            {selectedLineup && <Dialog open={!!selectedLineup} onClose={deselectLineup}>
+                <LineupContent lineup={selectedLineup} />
+            </Dialog>}
         </>}
     </>)
 }
