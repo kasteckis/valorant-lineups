@@ -18,7 +18,7 @@ const LineupContent = ({lineup}: Props) => {
                             return <iframe
                                 key={content.id}
                                 style={{border: 0, width: '100%', minHeight: '85vh'}}
-                                src="http://www.youtube.com/embed/oHg5SJYRHA0?mute=1"
+                                src={content.url + '?mute=1'}
                                 allowFullScreen
                             />
                         default:
