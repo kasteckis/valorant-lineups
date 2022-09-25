@@ -1,8 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import {ValorantMap} from "../maps";
 import {ErrorResponse} from "../../../utils/errorResponse";
+import {PrismaClient} from "@prisma/client";
 
-export default function handler(
+export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<ValorantMap | ErrorResponse>
 ) {
@@ -18,11 +19,21 @@ export default function handler(
         return
     }
 
-    res.status(200).json(
-        {
-            name: map, // Haven
-            shortName: map, // haven
-            picture: `/maps/${map}.png`,
+    const prisma = new PrismaClient()
+
+    const mapEntity = await prisma.map.findFirst({
+        where: {
+            shortName: map
         }
-    )
+    });
+
+    if (mapEntity) {
+        res.status(200).json(mapEntity)
+    } else {
+        res.status(404).json(
+            {
+                error: 'Map not found',
+            }
+        )
+    }
 }

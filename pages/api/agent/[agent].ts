@@ -1,8 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import {Agent} from "../agents";
 import {ErrorResponse} from "../../../utils/errorResponse";
+import {PrismaClient} from "@prisma/client";
 
-export default function handler(
+export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<Agent | ErrorResponse>
 ) {
@@ -18,11 +19,21 @@ export default function handler(
         return
     }
 
-    res.status(200).json(
-        {
-            name: agent, // Viper
-            shortName: agent, // viper
-            picture: `/agents/${agent}.png`,
+    const prisma = new PrismaClient()
+
+    const agentEntity = await prisma.agent.findFirst({
+        where: {
+            shortName: agent
         }
-    )
+    });
+
+    if (agentEntity) {
+        res.status(200).json(agentEntity)
+    } else {
+        res.status(404).json(
+            {
+                error: 'Agent not found',
+            }
+        )
+    }
 }
