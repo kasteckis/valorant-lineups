@@ -26,6 +26,7 @@ model Map {
 model Content {
     id Int @id @default(autoincrement())
     title String @db.Text
+    type String @db.Text
     url String @db.Text
     lineup_id Int
     lineup Lineup @relation(fields: [lineup_id], references: [id])

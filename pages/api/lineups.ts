@@ -1,19 +1,22 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import {ErrorResponse} from "../../utils/errorResponse";
+import {PrismaClient} from "@prisma/client";
 
 export interface Lineup {
+    id: number,
     title: string,
     picture: string,
     content: LineupContent[],
 }
 
 export interface LineupContent {
+    id: number,
     title: string,
     type: 'video' | 'image',
     url: string,
 }
 
-export default function handler(
+export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<Lineup[] | ErrorResponse>
 ) {
@@ -29,22 +32,29 @@ export default function handler(
         return
     }
 
-    res.status(200).json([
-        {
-            title: 'super duper',
-            picture: 'https://i.imgur.com/1xRXmD1.jpeg',
-            content: [
-                {
-                    title: 'test lineup video',
-                    type: 'video',
-                    url: 'https://www.youtube.com/watch?v=QH2-TGUlwu4',
-                },
-                {
-                    title: 'test lineup image',
-                    type: 'image',
-                    url: 'https://i.imgur.com/P9XsnQl.png',
-                },
-            ]
-        },
-    ])
+    const prisma = new PrismaClient()
+
+    const response: Lineup[] = []
+
+    const lineupsRaw: Lineup[] = await prisma.$queryRaw`
+        SELECT Lineup.id, Lineup.title, Lineup.picture FROM Lineup
+        JOIN Agent ON Lineup.agent_id = Agent.id
+        JOIN Map ON Lineup.map_id = Map.id
+        WHERE Map.shortName = ${map}
+        AND Agent.shortName = ${agent}`
+
+    for (const lineup of lineupsRaw) {
+        const contentRaw: LineupContent[] = await prisma.$queryRaw`
+            SELECT Content.id, Content.title, Content.type, Content.url FROM Content 
+            WHERE Content.lineup_id = ${lineup.id}`
+
+        response.push({
+            id: lineup.id,
+            title: lineup.title,
+            picture: lineup.picture,
+            content: contentRaw,
+        });
+    }
+
+    res.status(200).json(response)
 }
