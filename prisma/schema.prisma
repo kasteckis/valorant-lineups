@@ -7,30 +7,36 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Post {
-  id        Int      @id @default(autoincrement())
-  title     String   @db.VarChar(255)
-  createdAt DateTime @default(now()) @db.Timestamp(0)
-  content   String?  @db.Text
-  published Boolean  @default(false)
-  authorId  Int
-  author    User     @relation(fields: [authorId], references: [id])
-
-  @@index([authorId], map: "authorId")
+model Agent {
+    id Int @id @default(autoincrement())
+    name String @db.Text
+    shortName String @db.Text
+    picture String @db.Text
+    lineups Lineup[]
 }
 
-model Profile {
-  id     Int     @id @default(autoincrement())
-  bio    String? @db.Text
-  nesamone    String? @db.Text
-  userId Int     @unique(map: "userId")
-  user   User    @relation(fields: [userId], references: [id])
+model Map {
+    id Int @id @default(autoincrement())
+    name String @db.Text
+    shortName String @db.Text
+    picture String @db.Text
+    lineups Lineup[]
 }
 
-model User {
-  id      Int      @id @default(autoincrement())
-  name    String?  @db.VarChar(255)
-  email   String   @unique(map: "email") @db.VarChar(255)
-  posts   Post[]
-  profile Profile?
+model Content {
+    id Int @id @default(autoincrement())
+    title String @db.Text
+    url String @db.Text
+    lineup_id Int
+    lineup Lineup @relation(fields: [lineup_id], references: [id])
+}
+
+model Lineup {
+    id Int @id @default(autoincrement())
+    title String @db.Text
+    map_id Int
+    map Map @relation(fields: [map_id], references: [id])
+    agent_id Int
+    agent Agent @relation(fields: [agent_id], references: [id])
+    contents Content[]
 }
