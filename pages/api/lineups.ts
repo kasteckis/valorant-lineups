@@ -3,6 +3,7 @@ import {ErrorResponse} from "../../utils/errorResponse";
 
 export interface Lineup {
     title: string,
+    picture: string,
     content: LineupContent[],
 }
 
@@ -30,7 +31,8 @@ export default function handler(
 
     res.status(200).json([
         {
-            title: 'Ascent',
+            title: 'super duper',
+            picture: 'https://i.imgur.com/1xRXmD1.jpeg',
             content: [
                 {
                     title: 'test lineup video',

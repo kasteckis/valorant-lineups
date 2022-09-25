@@ -34,6 +34,7 @@ model Content {
 model Lineup {
     id Int @id @default(autoincrement())
     title String @db.Text
+    picture String @db.Text
     map_id Int
     map Map @relation(fields: [map_id], references: [id])
     agent_id Int

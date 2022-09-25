@@ -1,12 +1,13 @@
 import {Agent} from "../../pages/api/agents";
 import Image from "next/image";
 import {Box} from "@mui/material";
-import {useCallback, useEffect} from "react";
-import {useRouter} from "next/router";
+import {useCallback, useEffect, useState} from "react";
 import {useRecoilState} from "recoil";
 import {selectedAgent, selectedMap} from "../../utils/atoms";
 import {apiClient} from "../../utils/apiClient";
 import {ValorantMap} from "../../pages/api/maps";
+import {Lineup} from "../../pages/api/lineups";
+import styles from "./LineupSelection.module.css";
 
 interface Props {
     agent: string,
@@ -14,12 +15,12 @@ interface Props {
 }
 
 const LineupSelection = ({agent, map}: Props) => {
-    const router = useRouter()
     const [agentEntity, setAgentEntity] = useRecoilState(selectedAgent);
     const [mapEntity, setMapEntity] = useRecoilState(selectedMap);
+    const [lineups, setLineups] = useState<Lineup[]>([]);
 
-    const chooseLineup = useCallback((a: any) => () => {
-        console.log(a)
+    const chooseLineup = useCallback((lineup: Lineup) => () => {
+        console.log(lineup)
     }, [])
 
     const getAgent = useCallback(async () => {
@@ -36,6 +37,18 @@ const LineupSelection = ({agent, map}: Props) => {
         }
     }, [map, mapEntity, setMapEntity]);
 
+    const getLineups = useCallback(async () => {
+        if (map && agent) {
+            const params = {
+                agent: agent,
+                map: map,
+            }
+
+            const response = await apiClient.get<Lineup[]>(`lineups`, {params})
+            setLineups(response.data)
+        }
+    }, [map, agent, setLineups]);
+
     useEffect(() => {
         if (!agentEntity) {
             getAgent();
@@ -43,7 +56,8 @@ const LineupSelection = ({agent, map}: Props) => {
         if (!mapEntity) {
             getMap();
         }
-    }, [agentEntity, mapEntity, getAgent, getMap]);
+        getLineups();
+    }, [agentEntity, mapEntity, getAgent, getMap, getLineups]);
 
 
     return (<>
@@ -77,12 +91,11 @@ const LineupSelection = ({agent, map}: Props) => {
                 justifyContent: 'center',
                 flexWrap: 'wrap',
             }}>
-                {/*{maps.map(map =>*/}
-                {/*    <div key={map.shortName}>*/}
-                {/*        {map.picture && <Image onClick={chooseMap(map)} className={styles.mapSelectionImage} src={map.picture}*/}
-                {/*                               alt={map.name + ' logo'} width={384} height={216}/>}*/}
-                {/*    </div>*/}
-                {/*)}*/}
+                {lineups.map(lineup =>
+                    <div key={lineup.title}>
+                        <Image onClick={chooseLineup(lineup)} className={styles.lineupSelectionImage} src={lineup.picture} width={384} height={216}/>
+                    </div>
+                )}
             </Box>
         </>}
     </>)

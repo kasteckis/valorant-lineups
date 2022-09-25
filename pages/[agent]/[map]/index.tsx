@@ -9,10 +9,13 @@ const MapPage: NextPage = () => {
     agent = agent ? agent.toString() : ''
     map = map ? map.toString() : ''
 
+    const agentTitle = agent.charAt(0).toUpperCase() + agent.slice(1);
+    const mapTitle = map.charAt(0).toUpperCase() + map.slice(1);
+
     return (
         <>
             <Head>
-                <title>Valorant Lineups | {agent} | {map}</title>
+                <title>Valorant Lineups | {agentTitle} | {mapTitle}</title>
                 <meta name="description" content="Valorant agent lineups in every map." />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
