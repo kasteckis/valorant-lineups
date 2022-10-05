@@ -1,11 +1,12 @@
 import {Agent} from "../../pages/api/agents";
 import Image from "next/image";
 import {Box} from "@mui/material";
-import {useCallback} from "react";
+import {useCallback, useState} from "react";
 import {useRouter} from "next/router";
 import styles from './AgentSelection.module.css';
 import {useRecoilState} from "recoil";
 import {selectedAgent} from "../../utils/atoms";
+import AgentIsDisabledDialog from "./AgentIsDisabledDialog/AgentIsDisabledDialog";
 
 interface Props {
     agents: Agent[],
@@ -14,6 +15,7 @@ interface Props {
 const AgentSelection = ({agents}: Props) => {
     const router = useRouter()
     const [agentEntity, setAgentEntity] = useRecoilState<Agent | undefined>(selectedAgent);
+    const [agentDisabledDialogOpen, setAgentDisabledDialogOpen] = useState<boolean>(false);
 
     const chooseAgent = useCallback((agent: Agent) => () => {
         setAgentEntity(agent)
@@ -21,10 +23,11 @@ const AgentSelection = ({agents}: Props) => {
     }, [router, setAgentEntity])
 
     const showAgentIsDisabled = useCallback(() => {
-        console.log('agent is disabled');
-    }, [])
+        setAgentDisabledDialogOpen(true);
+    }, [setAgentDisabledDialogOpen])
 
     return (<>
+        <AgentIsDisabledDialog open={agentDisabledDialogOpen} setOpen={setAgentDisabledDialogOpen} />
         <Box sx={{
             m: 5,
             display: 'flex',
