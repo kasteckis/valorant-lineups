@@ -1,3 +1,7 @@
 .agentSelectionImage:hover {
     cursor: pointer;
 }
+
+.agentSelectionImageDisabled {
+    filter: grayscale(100%);
+}

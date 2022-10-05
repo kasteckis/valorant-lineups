@@ -20,6 +20,10 @@ const AgentSelection = ({agents}: Props) => {
         router.push(agent.shortName)
     }, [router, setAgentEntity])
 
+    const showAgentIsDisabled = useCallback(() => {
+        console.log('agent is disabled');
+    }, [])
+
     return (<>
         <Box sx={{
             m: 5,
@@ -35,7 +39,11 @@ const AgentSelection = ({agents}: Props) => {
         }}>
             {agents.map(agent =>
                 <div key={agent.name}>
-                    <Image onClick={chooseAgent(agent)} className={styles.agentSelectionImage} src={agent.picture} alt={agent.name + ' logo'} width={180} height={180} />
+                    {agent.disabled ?
+                        <Image onClick={showAgentIsDisabled} className={[styles.agentSelectionImage, styles.agentSelectionImageDisabled].join(' ')} src={agent.picture} alt={agent.name + ' logo'} width={180} height={180} />
+                        :
+                        <Image onClick={chooseAgent(agent)} className={styles.agentSelectionImage} src={agent.picture} alt={agent.name + ' logo'} width={180} height={180} />
+                    }
                 </div>
             )}
         </Box>
