@@ -28,7 +28,18 @@ export default async function handler(
     });
 
     if (agentEntity) {
-        res.status(200).json(agentEntity)
+        const availableAgents: Agent[] = await prisma.$queryRaw`
+            SELECT DISTINCT Agent.id, Agent.name, Agent.shortName, Agent.picture FROM Agent
+            JOIN Lineup ON Lineup.agent_id = Agent.id
+            WHERE Agent.shortName = ${agentEntity.shortName}`
+
+        res.status(200).json({
+            id: agentEntity.id,
+            name: agentEntity.name,
+            shortName: agentEntity.shortName,
+            picture: agentEntity.picture,
+            disabled: availableAgents.length <= 0,
+        })
     } else {
         res.status(404).json(
             {
