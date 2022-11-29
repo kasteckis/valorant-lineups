@@ -9,6 +9,7 @@ import {useRouter} from "next/router";
 import {useRecoilState} from "recoil";
 import {selectedAgent, selectedMap} from "../../utils/atoms";
 import Button from "@mui/material/Button";
+import Link from "next/link";
 
 interface Props {
     agent: string,
@@ -43,10 +44,6 @@ const MapSelection = ({agent}: Props) => {
         }
     }, [agent, setMaps]);
 
-    const handleGoBack = useCallback(() => {
-        router.push('/')
-    }, [router])
-
     useEffect(() => {
         getAgent();
         getMaps();
@@ -61,7 +58,9 @@ const MapSelection = ({agent}: Props) => {
                     display: 'flex',
                     justifyContent: 'center',
                 }}>
-                    <Button variant="text" onClick={handleGoBack}>Go back</Button>
+                    <Link href="/">
+                        <Button variant="text">Go back</Button>
+                    </Link>
                 </Box>
                 <Box sx={{
                     display: 'flex',

@@ -11,6 +11,7 @@ import styles from "./LineupSelection.module.css";
 import LineupContent from "./LineupContent/LineupContent";
 import Button from "@mui/material/Button";
 import {useRouter} from "next/router";
+import Link from "next/link";
 
 interface Props {
     agent: string,
@@ -58,10 +59,6 @@ const LineupSelection = ({agent, map}: Props) => {
         }
     }, [map, agent, setLineups]);
 
-    const handleGoBack = useCallback(() => {
-        router.push('/' + agent)
-    }, [router])
-
     useEffect(() => {
         if (!agentEntity) {
             getAgent();
@@ -80,7 +77,9 @@ const LineupSelection = ({agent, map}: Props) => {
                 display: 'flex',
                 justifyContent: 'center',
             }}>
-                <Button variant="text" onClick={handleGoBack}>Go back</Button>
+                <Link href={'/' + agent}>
+                    <Button variant="text">Go back</Button>
+                </Link>
             </Box>
             <Box sx={{
                 display: 'flex',
