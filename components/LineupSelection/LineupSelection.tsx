@@ -9,6 +9,8 @@ import {ValorantMap} from "../../pages/api/maps";
 import {Lineup} from "../../pages/api/lineups";
 import styles from "./LineupSelection.module.css";
 import LineupContent from "./LineupContent/LineupContent";
+import Button from "@mui/material/Button";
+import {useRouter} from "next/router";
 
 interface Props {
     agent: string,
@@ -20,6 +22,7 @@ const LineupSelection = ({agent, map}: Props) => {
     const [mapEntity, setMapEntity] = useRecoilState(selectedMap);
     const [lineups, setLineups] = useState<Lineup[]>([]);
     const [selectedLineup, setSelectedLineup] = useState<Lineup | null>(null);
+    const router = useRouter()
 
     const chooseLineup = useCallback((lineup: Lineup) => () => {
         setSelectedLineup(lineup)
@@ -55,6 +58,10 @@ const LineupSelection = ({agent, map}: Props) => {
         }
     }, [map, agent, setLineups]);
 
+    const handleGoBack = useCallback(() => {
+        router.push('/' + agent)
+    }, [router])
+
     useEffect(() => {
         if (!agentEntity) {
             getAgent();
@@ -70,6 +77,12 @@ const LineupSelection = ({agent, map}: Props) => {
         {agentEntity && mapEntity && <>
             <Box sx={{
                 mt: 5,
+                display: 'flex',
+                justifyContent: 'center',
+            }}>
+                <Button variant="text" onClick={handleGoBack}>Go back</Button>
+            </Box>
+            <Box sx={{
                 display: 'flex',
                 justifyContent: 'center',
             }}>

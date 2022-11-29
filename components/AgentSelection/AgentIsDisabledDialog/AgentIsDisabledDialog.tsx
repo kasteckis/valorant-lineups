@@ -30,7 +30,7 @@ export default function AgentIsDisabledDialog({open, setOpen}: Props) {
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        <Alert severity="error">Sowwwy, this agent does not have any current lineups at the moment. Please, check back later!</Alert>
+                        <Alert severity="error">Currently this agent does not have any current lineups at the moment. Please, check back later!</Alert>
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
