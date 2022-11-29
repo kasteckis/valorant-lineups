@@ -16,7 +16,7 @@ export default async function handler(
     const prisma = new PrismaClient()
 
     const allAgents: Agent[] = await prisma.$queryRaw`
-        SELECT Agent.id, Agent.name, Agent.shortName, Agent.picture FROM Agent`
+        SELECT Agent.id, Agent.name, Agent.shortName, Agent.picture FROM Agent ORDER BY shortName`
 
     const availableAgents: Agent[] = await prisma.$queryRaw`
         SELECT DISTINCT Agent.id, Agent.name, Agent.shortName, Agent.picture FROM Agent
