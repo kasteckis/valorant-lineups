@@ -1,6 +1,6 @@
 import {Agent} from "../../pages/api/agents";
 import Image from "next/image";
-import {Box} from "@mui/material";
+import {Box, Tooltip} from "@mui/material";
 import {useCallback, useState} from "react";
 import {useRouter} from "next/router";
 import styles from './AgentSelection.module.css';
@@ -43,9 +43,17 @@ const AgentSelection = ({agents}: Props) => {
             {agents.map(agent =>
                 <div key={agent.name}>
                     {agent.disabled ?
-                        <Image onClick={showAgentIsDisabled} className={[styles.agentSelectionImage, styles.agentSelectionImageDisabled].join(' ')} src={agent.picture} alt={agent.name + ' logo'} width={180} height={180} />
+                        <Tooltip title={agent.name} placement="top">
+                            <div>
+                                <Image onClick={showAgentIsDisabled} className={[styles.agentSelectionImage, styles.agentSelectionImageDisabled].join(' ')} src={agent.picture} alt={agent.name + ' logo'} width={180} height={180} />
+                            </div>
+                        </Tooltip>
                         :
-                        <Image onClick={chooseAgent(agent)} className={styles.agentSelectionImage} src={agent.picture} alt={agent.name + ' logo'} width={180} height={180} />
+                        <Tooltip title={agent.name} placement="top">
+                            <div>
+                                <Image onClick={chooseAgent(agent)} className={styles.agentSelectionImage} src={agent.picture} alt={agent.name + ' logo'} width={180} height={180} />
+                            </div>
+                        </Tooltip>
                     }
                 </div>
             )}
