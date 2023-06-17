@@ -3,6 +3,8 @@
 
 It is a website where anyone who plays Valorant can come and check specific lineups for each agent with some pictures and videos.
 
+![Valorant Lineups](readme.gif)
+
 # What has been used?
 1. Next.js (React)
 2. Docker
